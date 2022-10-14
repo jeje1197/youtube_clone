@@ -5,8 +5,18 @@ import { CheckCircle } from "@mui/icons-material"
 
 import { demoThumbnailUrl, demoVideoUrl, demoVideoTitle, demoChannelUrl, demoChannelTitle } from "../utils/constants"
 
-const VideoCard = ({ video: {id: { videoId }, snippet } }) => {
+function decodeHtml(html) {
+  var txt = document.createElement("textarea");
+  txt.innerHTML = html;
+  var value = txt.value;
+  txt.remove();
+  return value;
+}
 
+const VideoCard = ({ video: {id: { videoId }, snippet } }) => {
+  if (snippet) {
+    snippet.title = decodeHtml(snippet.title) 
+  }
   return (
     <Card sx={{ width: { xs: '100%', sm: '358px', md: '320px' }, boxShadow: 'none', borderRadius: 0 }}>
       <Link to={videoId ? `/video/${videoId}` : demoVideoUrl }>
